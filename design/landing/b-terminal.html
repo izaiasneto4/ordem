@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ordem.sh</title>
+<link rel="icon" href="../../public/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --hair: #1c1c1c;
+  --hair2: #2a2a2a;
+  --t1: #ededed;
+  --t2: #a1a1a1;
+  --t3: #5e5e5e;
+  --accent: #ff7a3d;
+  --green: #5fbf7d;
+  --yellow: #e6c84f;
+  --red: #f2605a;
+  --blue: #6c9eea;
+  --font: 'Inter', -apple-system, system-ui, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); }
+body { font: 14px/1.65 var(--mono); color: var(--t2); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--accent); color: #000; }
+body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px); background-size: 22px 22px;
+  mask-image: linear-gradient(180deg, #000, transparent 70%); }
+.col { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+
+header.top { display: flex; align-items: center; height: 72px; gap: 22px; font-size: 13px; }
+.brand { display: flex; align-items: center; gap: 9px; font: 700 17px var(--font); letter-spacing: -.02em; color: var(--t1); }
+.brand svg { width: 18px; height: 18px; overflow: visible; }
+.brand .s { fill: var(--accent); animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+header.top .r { margin-left: auto; display: flex; gap: 22px; }
+header.top a:hover { color: var(--t1); }
+header.top .gh { display: inline-flex; gap: 6px; align-items: center; }
+header.top .gh b { font-weight: 400; color: var(--t3); }
+
+.hero { padding: 120px 0 0; }
+.ver { display: inline-flex; gap: 10px; font-size: 12px; color: var(--t3); }
+.ver span { color: var(--green); }
+h1 { font: 600 clamp(44px, 7vw, 76px)/1.0 var(--font); letter-spacing: -.05em; color: var(--t1); margin-top: 22px; }
+h1 .dim { color: #3a3a3a; }
+h1 .cur { display: inline-block; width: .2em; height: .2em; background: var(--accent); border-radius: .04em; vertical-align: .55em; margin-left: .04em; animation: blink 1.1s steps(1) infinite; }
+.sub { font: 17px/1.6 var(--font); color: var(--t2); max-width: 540px; margin-top: 26px; letter-spacing: -.01em; }
+.sub b { color: var(--t1); font-weight: 500; }
+
+.install { margin-top: 44px; border: 1px solid var(--hair2); border-radius: 10px; background: rgba(10,10,10,.8); overflow: hidden; }
+.tabs { display: flex; border-bottom: 1px solid var(--hair2); font-size: 12.5px; }
+.tabs button { font: inherit; background: none; border: 0; color: var(--t3); padding: 10px 16px; cursor: pointer; position: relative; }
+.tabs button:hover { color: var(--t2); }
+.tabs button.on { color: var(--t1); }
+.tabs button.on::after { content: ''; position: absolute; left: 12px; right: 12px; bottom: -1px; height: 1px; background: var(--t1); }
+.tabs .dl { margin-left: auto; color: var(--t2); padding: 10px 16px; border-left: 1px solid var(--hair2); }
+.tabs .dl:hover { color: var(--t1); background: rgba(255,255,255,.03); }
+.cmd { display: flex; align-items: center; gap: 12px; padding: 18px 18px; font-size: 15px; color: var(--t1); }
+.cmd .p { color: var(--accent); user-select: none; }
+.cmd code { flex: 1; font: inherit; white-space: nowrap; overflow-x: auto; }
+.cmd button { font: 12px var(--mono); color: var(--t2); background: rgba(255,255,255,.04); border: 1px solid var(--hair2); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
+.cmd button:hover { color: var(--t1); border-color: #3a3a3a; }
+
+.term { margin-top: 72px; border: 1px solid var(--hair2); border-radius: 12px; background: #0d0d0d; box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(0,0,0,.6); overflow: hidden; }
+.term .bar { display: flex; align-items: center; height: 38px; padding: 0 14px; border-bottom: 1px solid var(--hair); font-size: 12px; color: var(--t3); }
+.term .bar i { width: 11px; height: 11px; border-radius: 50%; background: #262626; margin-right: 7px; }
+.term .bar span { margin: 0 auto; transform: translateX(-30px); }
+.term pre { font: 13px/1.75 var(--mono); padding: 18px 20px 22px; height: 540px; overflow: hidden; color: var(--t2); white-space: pre-wrap; }
+.term .pr { color: var(--t3); } .term .c { color: var(--t1); } .term .a { color: var(--accent); }
+.term .g { color: var(--green); } .term .y { color: var(--yellow); } .term .r { color: var(--red); } .term .b { color: var(--blue); } .term .d { color: var(--t3); }
+.term .k { display: inline-block; width: 8px; height: 15px; background: var(--t1); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+
+h2 { font: 600 13px var(--mono); color: var(--t3); text-transform: uppercase; letter-spacing: .1em; margin: 128px 0 28px; display: flex; align-items: center; gap: 14px; }
+h2::after { content: ''; flex: 1; height: 1px; background: var(--hair); }
+
+.man { display: grid; grid-template-columns: 140px 1fr; row-gap: 28px; }
+.man dt { color: var(--t1); font-weight: 500; }
+.man dt span { color: var(--t3); margin-right: 10px; }
+.man dd { font: 15px/1.65 var(--font); color: var(--t2); letter-spacing: -.005em; }
+.man dd code { font: 13px var(--mono); color: var(--t1); background: #161616; border: 1px solid var(--hair2); padding: 1px 6px; border-radius: 5px; }
+
+.stack { display: flex; flex-wrap: wrap; gap: 8px; }
+.stack span { border: 1px solid var(--hair2); border-radius: 99px; padding: 5px 14px; font-size: 13px; color: var(--t2); transition: all .2s; }
+.stack span:hover { color: var(--t1); border-color: #3a3a3a; }
+.stack span i { font-style: normal; color: var(--t3); margin-right: 6px; }
+
+.app { position: relative; margin-top: 8px; border: 1px solid var(--hair2); border-radius: 12px; overflow: hidden; background: #161618; height: 300px; display: grid; grid-template-columns: 170px 1fr; font: 12.5px/1.5 -apple-system, 'SF Pro Text', var(--font); color: rgba(255,255,255,.88); }
+.app::after { content: ''; position: absolute; inset: 40% 0 0; background: linear-gradient(transparent, var(--bg)); }
+.app aside { background: #19191b; border-right: 1px solid rgba(255,255,255,.07); padding: 12px 8px; }
+.app aside div { height: 26px; display: flex; align-items: center; padding: 0 8px; border-radius: 6px; gap: 8px; }
+.app aside div.on { background: rgba(255,255,255,.1); }
+.app aside em { font-style: normal; margin-left: auto; color: rgba(235,235,245,.45); }
+.app main { padding: 18px 28px; }
+.app main h4 { font-size: 18px; letter-spacing: -.02em; margin-bottom: 14px; }
+.app .f { display: flex; gap: 10px; padding: 9px 12px; border-radius: 9px; background: #1f1f22; box-shadow: inset 0 0 0 .5px rgba(255,255,255,.12); margin-bottom: 8px; }
+.app .f i { width: 14px; height: 14px; border-radius: 4px; background: var(--accent); flex: none; margin-top: 2px; }
+.app .f small { display: block; font: 11px var(--mono); color: rgba(235,235,245,.4); }
+
+.faq details { border-top: 1px solid var(--hair); padding: 18px 0; }
+.faq details:last-child { border-bottom: 1px solid var(--hair); }
+.faq summary { list-style: none; cursor: pointer; color: var(--t1); display: flex; justify-content: space-between; }
+.faq summary::after { content: '+'; color: var(--t3); }
+.faq details[open] summary::after { content: '−'; }
+.faq p { font: 15px/1.65 var(--font); margin-top: 10px; max-width: 600px; }
+
+footer { margin-top: 140px; padding: 32px 0 56px; border-top: 1px solid var(--hair); font-size: 12.5px; color: var(--t3); }
+footer .col { display: flex; gap: 20px; }
+footer .col div { margin-left: auto; display: flex; gap: 20px; }
+footer a:hover { color: var(--t1); }
+
+.fade { opacity: 0; transform: translateY(8px); animation: up .8s cubic-bezier(.2,.8,.2,1) forwards; }
+@keyframes up { to { opacity: 1; transform: none; } }
+@media (max-width: 640px) { .man { grid-template-columns: 1fr; row-gap: 6px; } .man dd { margin-bottom: 18px; } header.top .r a:not(.gh) { display: none; } .app { grid-template-columns: 1fr; } .app aside { display: none; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } .fade { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+<div class="col">
+  <header class="top">
+    <a class="brand" href="#"><svg viewBox="0 0 103 103"><path fill="currentColor" fill-rule="evenodd" d="M22 13H69A4 4 0 0 1 73 17V27A3 3 0 0 0 76 30H86A4 4 0 0 1 90 34V81A22 22 0 0 1 68 103H22A22 22 0 0 1 0 81V35A22 22 0 0 1 22 13ZM26 33A6 6 0 0 0 20 39V77A6 6 0 0 0 26 83H64A6 6 0 0 0 70 77V39A6 6 0 0 0 64 33Z"/><path class="s" d="M85 0H99A4 4 0 0 1 103 4V18A4 4 0 0 1 99 22H85A4 4 0 0 1 81 18V4A4 4 0 0 1 85 0Z"/></svg>ordem</a>
+    <div class="r">
+      <a href="#docs">docs</a>
+      <a href="#">changelog</a>
+      <a class="gh" href="#">github <b>★ 1.2k</b></a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="ver fade"><span>●</span> v0.9.0 · macOS · MIT</div>
+    <h1 class="fade" style="animation-delay:.08s">Code review,<br><span class="dim">in order</span><span class="cur"></span></h1>
+    <p class="sub fade" style="animation-delay:.16s">A local inbox for your pull requests. Point <b>Claude</b>, <b>Codex</b> or <b>OpenCode</b> at a PR, read what it found, and post only the parts you agree with.</p>
+
+    <div class="install fade" style="animation-delay:.24s">
+      <div class="tabs" id="tabs">
+        <button class="on" data-cmd="brew install ordem">brew</button>
+        <button data-cmd="curl -fsSL https://ordem.sh/install | sh">curl</button>
+        <button data-cmd="git clone https://github.com/izaiasneto4/ordem && cd ordem && bin/setup">source</button>
+        <a class="dl" href="#">↓ Ordem.dmg</a>
+      </div>
+      <div class="cmd"><span class="p">$</span><code id="cmd">brew install ordem</code><button id="cp">copy</button></div>
+    </div>
+  </section>
+
+  <div class="term fade" style="animation-delay:.36s">
+    <div class="bar"><i></i><i></i><i></i><span>~/code/acme/api — zsh</span></div>
+    <pre id="out"></pre>
+  </div>
+
+  <h2 id="docs">What it does</h2>
+  <dl class="man">
+    <dt><span>01</span>sync</dt>
+    <dd>Pulls every open PR that's waiting on you through <code>gh</code>. No tokens to paste, no GitHub app to install.</dd>
+    <dt><span>02</span>review</dt>
+    <dd>Checks out the head in a <code>git worktree</code> and runs your agent with the whole repo as context. <code>--type swarm</code> splits it across security, correctness, performance and API reviewers.</dd>
+    <dt><span>03</span>decide</dt>
+    <dd>Findings land pre-checked with a suggested verdict. Drop the noise with <code>X</code>, keep the rest.</dd>
+    <dt><span>04</span>submit</dt>
+    <dd>One review goes to GitHub as you, with inline comments on the right lines. <code>⌘↵</code> and on to the next PR.</dd>
+  </dl>
+
+  <h2>Also a desktop app</h2>
+  <div class="app">
+    <aside>
+      <div class="on">Inbox<em>5</em></div><div>Reviewing<em>2</em></div><div>Waiting on author<em>1</em></div><div>My pull requests</div><div>Settled</div>
+    </aside>
+    <main>
+      <h4>Add rate limiting to webhook endpoint</h4>
+      <div class="f"><i></i><div>Limiter keys on IP, but every webhook comes from GitHub's ranges<small>src/webhooks/limit.ts:19</small></div></div>
+      <div class="f"><i></i><div>429 response drops the <code>Retry-After</code> header<small>src/webhooks/handler.ts:64</small></div></div>
+      <div class="f"><i style="background:transparent;box-shadow:inset 0 0 0 1.5px #555"></i><div style="opacity:.5">Consider extracting the window size to config<small>src/webhooks/limit.ts:7</small></div></div>
+    </main>
+  </div>
+
+  <h2>Built on</h2>
+  <div class="stack">
+    <span><i>$</i>gh</span><span><i>$</i>git worktree</span><span><i>$</i>claude</span><span><i>$</i>codex</span><span><i>$</i>opencode</span><span><i>~</i>bun</span><span><i>~</i>sqlite</span><span><i>~</i>tauri</span>
+  </div>
+
+  <h2>Questions</h2>
+  <div class="faq">
+    <details><summary>Does my code leave my machine?</summary><p>Only as far as your agent sends it. Ordem has no backend. It runs the CLIs you already use with the credentials you already have.</p></details>
+    <details><summary>Will it post to GitHub on its own?</summary><p>No. Every review waits in your inbox until you submit it, and you choose which findings go with it.</p></details>
+    <details><summary>Which models does it use?</summary><p>Whatever your agent CLI is set to. Switch per review between Claude, Codex and OpenCode, or set a default in settings.</p></details>
+    <details><summary>Is it free?</summary><p>Yes, MIT licensed. You pay for your agent's usage, same as you do today.</p></details>
+  </div>
+</div>
+
+<footer>
+  <div class="col">
+    <span>ordem.sh — code review, in order.</span>
+    <div><a href="#">github</a><a href="#">docs</a><a href="#">license</a></div>
+  </div>
+</footer>
+
+<script>
+const tabs = document.getElementById('tabs'), cmd = document.getElementById('cmd'), cp = document.getElementById('cp')
+tabs.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+  tabs.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on'); cmd.textContent = b.dataset.cmd
+}))
+cp.addEventListener('click', () => { navigator.clipboard?.writeText(cmd.textContent); cp.textContent = 'copied'; setTimeout(() => cp.textContent = 'copy', 1400) })
+
+const P = '<span class="pr">~/code/acme/api</span> <span class="a">❯</span> '
+const script = [
+  { type: 'ordem sync' },
+  { out: '<span class="g">✓</span> synced <span class="c">14</span> pull requests from acme/api <span class="d">(1.2s)</span>', wait: 500 },
+  { type: 'ordem list --status pending_review' },
+  { out: '  <span class="d">#479</span>  <span class="c">Migrate invoice amounts to a decimal money type</span>  <span class="d">theo</span>  <span class="g">+1204</span> <span class="r">−611</span>', wait: 90 },
+  { out: '  <span class="d">#490</span>  <span class="c">Fix hydration mismatch in Dashboard</span>              <span class="d">lena</span>  <span class="g">+38</span> <span class="r">−12</span>', wait: 90 },
+  { out: '  <span class="d">#493</span>  <span class="c">Add rate limiting to webhook endpoint</span>            <span class="d">maya</span>  <span class="g">+212</span> <span class="r">−40</span>', wait: 600 },
+  { type: 'ordem review acme/api#479 --client claude --type swarm' },
+  { out: '<span class="d">→</span> queued task <span class="c">312</span> · claude · swarm', wait: 400 },
+  { out: '<span class="d">→</span> worktree ready at /tmp/ordem/api-479', wait: 500 },
+  { swarm: true },
+  { out: '', wait: 100 },
+  { out: '<span class="g">✓</span> review ready · <span class="c">4 findings</span> · suggested <span class="y">request changes</span>', wait: 150 },
+  { out: '  <span class="r">high</span>    backfill locks <span class="c">invoices</span> for the whole migration', wait: 70 },
+  { out: '  <span class="y">medium</span>  tax rounded before line items are summed', wait: 70 },
+  { out: '  <span class="y">medium</span>  <span class="c">Money#to_json</span> changes the public API shape', wait: 70 },
+  { out: '  <span class="d">nit</span>     prefer <span class="c">Money.zero()</span>', wait: 600 },
+  { out: '<span class="d">  open in ordem, or run</span> <span class="c">ordem submit 312</span>', wait: 4000 },
+]
+const out = document.getElementById('out')
+const sleep = ms => new Promise(r => setTimeout(r, ms))
+const reviewers = ['security', 'correctness', 'performance', 'api surface']
+const frames = '⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏'
+async function play() {
+  for (;;) {
+    let html = ''
+    const render = tail => { out.innerHTML = html + (tail ?? '') }
+    for (const s of script) {
+      if (s.type) {
+        let typed = ''
+        render(P + '<span class="k"></span>'); await sleep(500)
+        for (const ch of s.type) { typed += ch; render(P + '<span class="c">' + typed + '</span><span class="k"></span>'); await sleep(28 + Math.random() * 40) }
+        await sleep(250); html += P + '<span class="c">' + s.type + '</span>\n'; render()
+      } else if (s.swarm) {
+        const done = [0, 0, 0, 0], at = [14, 22, 30, 38], counts = [1, 2, 0, 1]
+        for (let f = 0; f <= 42; f++) {
+          const rows = reviewers.map((r, i) => {
+            const fin = f >= at[i]
+            const icon = fin ? '<span class="g">✓</span>' : '<span class="b">' + frames[(f + i * 3) % frames.length] + '</span>'
+            const tail = fin ? '<span class="d">' + (counts[i] ? counts[i] + ' finding' + (counts[i] > 1 ? 's' : '') : 'clean') + '</span>' : '<span class="d">reviewing…</span>'
+            return '  ' + icon + ' ' + r.padEnd(13) + tail
+          }).join('\n')
+          render(rows + '\n'); await sleep(90)
+          if (f === 42) html += rows + '\n'
+        }
+      } else { html += s.out + '\n'; render(); await sleep(s.wait) }
+    }
+    render(P + '<span class="k"></span>'); await sleep(1200)
+  }
+}
+play()
+</script>
+</body>
+</html>
