@@ -17,8 +17,8 @@
   --t1: #f7f8f8;
   --t2: #8a8f98;
   --t3: #5c6068;
-  --accent: #ff7a3d;
-  --accent-ink: #1a0c04;
+  --accent: #f5f5f5;
+  --accent-ink: #0e0e0e;
   --green: #5fbf7d;
   --red: #f2605a;
   --font: 'Inter', -apple-system, system-ui, sans-serif;
@@ -46,14 +46,14 @@ nav.top .links a span { color: var(--t3); margin-right: 6px; }
 nav.top .links a:hover { color: var(--t1); background: rgba(255,255,255,.04); }
 nav.top .right { margin-left: auto; display: flex; gap: 6px; align-items: center; }
 .btn { display: inline-flex; align-items: center; gap: 9px; height: 36px; padding: 0 14px; border-radius: 8px; font-size: 13.5px; font-weight: 500; transition: background .2s, box-shadow .2s, transform .2s var(--ease); white-space: nowrap; }
-.btn-accent { background: var(--accent); color: var(--accent-ink); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 1px rgba(255,122,61,.4); }
-.btn-accent:hover { background: #ff8c55; box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 1px rgba(255,122,61,.6), 0 8px 30px rgba(255,122,61,.25); }
+.btn-accent { background: var(--accent); color: var(--accent-ink); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 1px rgba(255,255,255,0.22); }
+.btn-accent:hover { background: #ffffff; box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 1px rgba(255,255,255,0.33), 0 8px 30px rgba(255,255,255,0.138); }
 .btn-accent .kbd { font: 11px var(--mono); padding: 1px 5px; border-radius: 4px; background: rgba(0,0,0,.14); }
 .btn-ghost { color: var(--t2); } .btn-ghost:hover { color: var(--t1); }
 .btn-lg { height: 48px; padding: 0 20px; border-radius: 10px; font-size: 15px; }
 .cmd { display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 8px 0 16px; border-radius: 10px; border: 1px dashed var(--hair2); font: 14px var(--mono); color: var(--t1); transition: border-color .2s, background .2s; }
 .cmd:hover { border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.02); }
-.cmd .p { color: var(--accent); }
+.cmd .p { color: var(--t3); }
 .cmd .cp { font: 11.5px var(--mono); color: var(--t2); border: 1px solid var(--hair2); border-radius: 6px; padding: 4px 8px; }
 
 /* section index rail */
@@ -67,7 +67,7 @@ nav.top .right { margin-left: auto; display: flex; gap: 6px; align-items: center
 
 /* hero */
 .hero { position: relative; padding: 150px 0 90px; overflow: hidden; }
-.hero::before { content: ''; position: absolute; right: -10%; top: 0; width: 70%; height: 100%; background: radial-gradient(closest-side, rgba(255,122,61,.09), transparent 70%); pointer-events: none; }
+.hero::before { content: ''; position: absolute; right: -10%; top: 0; width: 70%; height: 100%; background: radial-gradient(closest-side, rgba(255,255,255,0.05), transparent 70%); pointer-events: none; }
 .hero .wrap { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
 .def { font: 12.5px var(--mono); color: var(--t3); display: flex; gap: 10px; align-items: baseline; }
 .def b { color: var(--t1); font-weight: 500; }
@@ -75,7 +75,7 @@ nav.top .right { margin-left: auto; display: flex; gap: 6px; align-items: center
 h1 { margin-top: 26px; font-size: clamp(54px, 7.2vw, 94px); line-height: .95; letter-spacing: -.05em; font-weight: 650; }
 h1 .w { display: inline-block; }
 h1 .dim { color: #4d5057; }
-h1 .sq { display: inline-block; width: .16em; height: .16em; border-radius: .03em; background: var(--accent); margin-left: .05em; transform: translateY(-.42em); box-shadow: 0 0 22px rgba(255,122,61,.55); }
+h1 .sq { display: inline-block; width: .16em; height: .16em; border-radius: .03em; background: var(--accent); margin-left: .05em; transform: translateY(-.42em); box-shadow: 0 0 22px rgba(255,255,255,0.303); }
 .lead { margin-top: 28px; max-width: 470px; font-size: 18px; line-height: 1.55; color: var(--t2); letter-spacing: -.01em; }
 .lead b { color: var(--t1); font-weight: 500; }
 .ctas { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
@@ -89,7 +89,7 @@ h1 .sq { display: inline-block; width: .16em; height: .16em; border-radius: .03e
 .sorter .gh { position: absolute; left: 4px; top: 0; height: 26px; display: flex; align-items: center; gap: 8px; font: 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--t3); transition: transform .8s var(--spring), opacity .4s; }
 .sorter .gh b { font-weight: 400; color: var(--t2); }
 .sorter .card { position: absolute; left: 0; right: 0; top: 0; height: 48px; border-radius: 11px; background: linear-gradient(180deg, #161719, #121314); box-shadow: inset 0 0 0 1px var(--hair), 0 8px 24px rgba(0,0,0,.25); display: grid; grid-template-columns: 18px 1fr auto; gap: 0 12px; align-items: center; padding: 0 14px; transition: transform .85s var(--spring), opacity .5s, box-shadow .4s; will-change: transform; font-size: 13.5px; }
-.sorter .card.hot { box-shadow: inset 0 0 0 1px rgba(255,122,61,.45), 0 8px 30px rgba(255,122,61,.12); }
+.sorter .card.hot { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.248), 0 8px 30px rgba(255,255,255,0.066); }
 .sorter .card .t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; color: rgba(255,255,255,.92); }
 .sorter .card .t small { font: 11.5px var(--mono); color: var(--t3); font-weight: 400; margin-left: 8px; }
 .sorter .card .s { font: 11px var(--mono); color: var(--t3); }
@@ -100,7 +100,7 @@ h1 .sq { display: inline-block; width: .16em; height: .16em; border-radius: .03e
 .moon { width: 13px; height: 13px; border-radius: 50%; border: 1.5px solid #8a8f98; background: linear-gradient(90deg, #8a8f98 50%, transparent 50%); }
 .sorter .foot { position: absolute; left: 4px; right: 0; bottom: 0; display: flex; align-items: center; gap: 8px; font: 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--t3); border-top: 1px dashed var(--hair2); padding-top: 14px; }
 .sorter .foot b { font-weight: 400; color: var(--t2); display: inline-block; }
-.sorter .foot b.bump { animation: bump .5s var(--spring); color: var(--green); }
+.sorter .foot b.bump { animation: bump .5s var(--spring); color: var(--t1); }
 @keyframes bump { 40% { transform: translateY(-4px); } }
 .sorter .foot .r { margin-left: auto; text-transform: none; letter-spacing: 0; }
 
@@ -157,11 +157,11 @@ h1 .sq { display: inline-block; width: .16em; height: .16em; border-radius: .03e
 .find:first-of-type { border-top: 0; }
 .box { flex: none; width: 15px; height: 15px; border-radius: 4px; background: var(--accent); display: grid; place-items: center; margin-top: 2px; }
 .sev { font-size: 11px; padding: 0 6px; border-radius: 5px; height: 18px; display: inline-flex; align-items: center; }
-.sev.hi { background: rgba(242,96,90,.15); color: #f58a85; } .sev.md { background: rgba(233,162,59,.15); color: #e9b35f; }
+.sev.hi { background: rgba(242,96,90,.15); color: #f58a85; } .sev.md { background: rgba(255,255,255,.08); color: #b9bcc3; }
 .find p { color: rgba(255,255,255,.88); }
 .find small { color: rgba(235,235,245,.45); font: 11.5px var(--mono); }
-.pin { position: absolute; z-index: 3; width: 22px; height: 22px; border-radius: 6px; background: var(--accent); color: var(--accent-ink); font: 600 11.5px var(--mono); display: grid; place-items: center; box-shadow: 0 0 0 4px rgba(255,122,61,.18); transition: transform .3s var(--spring), box-shadow .3s; }
-.pin.lit { transform: scale(1.2); box-shadow: 0 0 0 8px rgba(255,122,61,.22), 0 0 30px rgba(255,122,61,.5); }
+.pin { position: absolute; z-index: 3; width: 22px; height: 22px; border-radius: 6px; background: var(--accent); color: var(--accent-ink); font: 600 11.5px var(--mono); display: grid; place-items: center; box-shadow: 0 0 0 4px rgba(255,255,255,0.099); transition: transform .3s var(--spring), box-shadow .3s; }
+.pin.lit { transform: scale(1.2); box-shadow: 0 0 0 8px rgba(255,255,255,0.121), 0 0 30px rgba(255,255,255,0.275); }
 .legend { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 28px; border-top: 1px solid var(--hair); }
 .legend div { padding: 22px 24px 0 0; cursor: default; }
 .legend b { display: flex; gap: 10px; align-items: center; font-weight: 500; font-size: 15px; }
@@ -223,7 +223,7 @@ h3.big span { color: var(--t3); }
 .k:first-child { border-left: 0; padding-left: 0; }
 .cap { width: fit-content; min-width: 60px; height: 60px; padding: 0 16px; border-radius: 12px; display: grid; place-items: center; font: 500 20px var(--font); color: var(--t1);
   background: linear-gradient(180deg, #1c1d1f, #131415); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), inset 0 -3px 0 rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.07), 0 10px 30px rgba(0,0,0,.4); transition: all .15s var(--ease); }
-.cap.down { transform: translateY(3px); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), inset 0 -1px 0 rgba(0,0,0,.4), 0 0 0 1px rgba(255,122,61,.6), 0 0 30px rgba(255,122,61,.25); color: var(--accent); }
+.cap.down { transform: translateY(3px); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), inset 0 -1px 0 rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,0.33), 0 0 30px rgba(255,255,255,0.138); color: var(--accent); }
 .k b { font-weight: 500; font-size: 14.5px; }
 .k span { font-size: 13px; color: var(--t3); margin-top: -12px; transition: color .2s; }
 .k.lit span { color: var(--t2); }
@@ -251,8 +251,8 @@ h3.big span { color: var(--t3); }
 .bigmark svg { width: 100%; height: 100%; overflow: visible; }
 .bigmark .ring { fill: none; stroke: rgba(255,255,255,.22); stroke-width: .6; }
 .bigmark .ringfill { fill: url(#fillgrad); }
-.bigmark .sqr { transform-box: fill-box; transform-origin: center; fill: var(--accent); filter: drop-shadow(0 0 8px rgba(255,122,61,.7)); }
-.bigmark::after { content: ''; position: absolute; inset: -30%; background: radial-gradient(closest-side, rgba(255,122,61,.10), transparent); z-index: -1; }
+.bigmark .sqr { transform-box: fill-box; transform-origin: center; fill: var(--accent); filter: drop-shadow(0 0 8px rgba(255,255,255,0.385)); }
+.bigmark::after { content: ''; position: absolute; inset: -30%; background: radial-gradient(closest-side, rgba(255,255,255,0.055), transparent); z-index: -1; }
 
 footer { border-top: 1px solid var(--hair); padding: 40px 0 56px; color: var(--t3); font-size: 13px; }
 footer .wrap { display: flex; gap: 24px; align-items: center; }
@@ -288,7 +288,7 @@ footer a:hover { color: var(--t1); }
     <path id="sq" d="M85 0H99A4 4 0 0 1 103 4V18A4 4 0 0 1 99 22H85A4 4 0 0 1 81 18V4A4 4 0 0 1 85 0Z"/>
     <linearGradient id="fillgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".09"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
     <symbol id="mark" viewBox="0 0 103 103"><use href="#ring" fill="currentColor"/><use href="#sq" fill="currentColor"/></symbol>
-    <symbol id="claude" viewBox="0 0 100 100"><g fill="#D97757"><path id="ray" d="M50 6 L54 42 L50 50 L46 42 Z"/><use href="#ray" transform="rotate(30 50 50)"/><use href="#ray" transform="rotate(60 50 50)"/><use href="#ray" transform="rotate(90 50 50)"/><use href="#ray" transform="rotate(120 50 50)"/><use href="#ray" transform="rotate(150 50 50)"/><use href="#ray" transform="rotate(180 50 50)"/><use href="#ray" transform="rotate(210 50 50)"/><use href="#ray" transform="rotate(240 50 50)"/><use href="#ray" transform="rotate(270 50 50)"/><use href="#ray" transform="rotate(300 50 50)"/><use href="#ray" transform="rotate(330 50 50)"/><circle cx="50" cy="50" r="11"/></g></symbol>
+    <symbol id="claude" viewBox="0 0 100 100"><g fill="currentColor"><path id="ray" d="M50 6 L54 42 L50 50 L46 42 Z"/><use href="#ray" transform="rotate(30 50 50)"/><use href="#ray" transform="rotate(60 50 50)"/><use href="#ray" transform="rotate(90 50 50)"/><use href="#ray" transform="rotate(120 50 50)"/><use href="#ray" transform="rotate(150 50 50)"/><use href="#ray" transform="rotate(180 50 50)"/><use href="#ray" transform="rotate(210 50 50)"/><use href="#ray" transform="rotate(240 50 50)"/><use href="#ray" transform="rotate(270 50 50)"/><use href="#ray" transform="rotate(300 50 50)"/><use href="#ray" transform="rotate(330 50 50)"/><circle cx="50" cy="50" r="11"/></g></symbol>
     <symbol id="codex" viewBox="0 0 24 24"><path fill="currentColor" d="M22.28 9.82a5.98 5.98 0 0 0-.52-4.91 6.05 6.05 0 0 0-6.51-2.9A6.07 6.07 0 0 0 4.98 4.18a5.98 5.98 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.1 5.98 5.98 0 0 0 .51 4.91 6.05 6.05 0 0 0 6.52 2.9A5.98 5.98 0 0 0 13.26 24a6.06 6.06 0 0 0 5.77-4.21 5.99 5.99 0 0 0 4-2.9 6.06 6.06 0 0 0-.75-7.07zM13.26 22.43a4.48 4.48 0 0 1-2.88-1.04l.14-.08 4.78-2.76a.8.8 0 0 0 .39-.68v-6.74l2.02 1.17a.07.07 0 0 1 .04.05v5.58a4.5 4.5 0 0 1-4.49 4.5zM3.6 18.3a4.47 4.47 0 0 1-.54-3.01l.14.08 4.78 2.76a.77.77 0 0 0 .78 0l5.84-3.37v2.33a.08.08 0 0 1-.03.06l-4.83 2.79a4.5 4.5 0 0 1-6.14-1.65zM2.34 7.9A4.49 4.49 0 0 1 4.7 5.92v5.68a.77.77 0 0 0 .39.68l5.81 3.35-2.02 1.17a.08.08 0 0 1-.07 0L4 14.02A4.5 4.5 0 0 1 2.34 7.87zm16.6 3.86-5.84-3.39 2.02-1.16a.08.08 0 0 1 .07 0l4.83 2.79a4.49 4.49 0 0 1-.68 8.1v-5.67a.79.79 0 0 0-.4-.67zm2-3.02-.14-.09-4.77-2.78a.78.78 0 0 0-.79 0L9.4 9.23V6.9a.07.07 0 0 1 .03-.06l4.83-2.79a4.5 4.5 0 0 1 6.68 4.66zM8.3 12.86 6.28 11.7a.08.08 0 0 1-.04-.06V6.08a4.5 4.5 0 0 1 7.38-3.45l-.14.08L8.7 5.46a.8.8 0 0 0-.39.68zm1.1-2.37 2.6-1.5 2.61 1.5v3l-2.6 1.5-2.6-1.5z"/></symbol>
     <symbol id="opencode" viewBox="0 0 24 24"><path fill="currentColor" d="M3 5h7v14H3V5zm2 2v10h3V7H5zm11-2h5v2h-5v4h3v2h-3v4h5v2h-7V5h2z"/></symbol>
     <symbol id="i-inbox" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3 13h5l1.5 3h5L16 13h5M5.5 5h13L21 13v6H3v-6z"/></symbol>
@@ -296,7 +296,7 @@ footer a:hover { color: var(--t1); }
     <symbol id="i-hour" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M7 3h10M7 21h10M8 3c0 5 8 5 8 9s-8 4-8 9M16 3c0 5-8 5-8 9s8 4 8 9"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></g></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></g></symbol>
-    <symbol id="i-send" viewBox="0 0 24 24"><path fill="#ff7a3d" d="M3 11l18-8-8 18-2-8z"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path fill="currentColor" d="M3 11l18-8-8 18-2-8z"/></symbol>
   </defs>
 </svg>
 
@@ -339,7 +339,7 @@ footer a:hover { color: var(--t1); }
       <div class="meta fade" style="animation-delay:1s"><span>MIT</span><span>runs locally</span><span>no account</span></div>
     </div>
     <div class="sorter fade" id="sorter" style="animation-delay:.2s" aria-hidden="true">
-      <div class="foot"><svg width="13" height="13" style="color:var(--green)"><use href="#i-check"/></svg>Settled <b id="settled">48</b><span class="r">sorted by what needs you</span></div>
+      <div class="foot"><svg width="13" height="13" style="color:var(--t2)"><use href="#i-check"/></svg>Settled <b id="settled">48</b><span class="r">sorted by what needs you</span></div>
     </div>
   </div>
 </header>
