@@ -28,3 +28,6 @@ node_modules/
 
 # SQLite files from a DATABASE_PATH of :memory: resolved as a path
 /:memory:*
+
+# Landing page build output
+/site/dist/

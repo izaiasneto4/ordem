@@ -8,6 +8,7 @@ Ordem is a Bun + Elysia API with a React frontend.
 - `backend/bin/` — `ordem` CLI and `migrate` entrypoints.
 - `frontend/` — React + Vite app (dark, macOS-style design; styles in `frontend/src/styles/ordem.css`). Its production build in `public/frontend` is committed: rebuild with `npm --prefix frontend run build`.
 - `public/` — static assets and error pages served by the API.
+- `site/` — the ordem.sh landing page (one static `index.html`), deployed on Vercel with `site/` as Root Directory. `site/build.sh` copies in `install.sh` and the brand files, so `ordem.sh/install.sh` serves the script on main.
 - `storage/` — SQLite databases.
 - `desktop/` — Electron shell (`src/`: server supervisor, `ordem://` protocol, preload bridge, updater), electron-builder config as code, packaging scripts. The bridge contract the web app and preload share is `shared/desktop-bridge.ts`. Spec and plan: `docs/desktop-port-spec.md`, `docs/desktop-port-plan.md`.
 - `scripts/` — `build-server.ts` (compiles the backend into the desktop sidecar), `smoke-server.ts`, `sync-version.ts`.

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "sh build.sh",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ../install.sh ../public/brand ../public/favicon.svg ../public/favicon.ico ../public/apple-touch-icon.png ../public/icon.png ../public/icon.svg",
+  "redirects": [
+    { "source": "/install", "destination": "/install.sh", "permanent": false }
+  ],
+  "headers": [
+    {
+      "source": "/install.sh",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }
+      ]
+    }
+  ]
+}
