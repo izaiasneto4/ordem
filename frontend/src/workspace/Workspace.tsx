@@ -7,11 +7,16 @@ import { Inspector } from '../components/Inspector'
 import { NewReview } from '../components/NewReview'
 import { PullRequestDetail, DetailEmpty } from '../components/PullRequestDetail'
 import { PullRequestList } from '../components/PullRequestList'
+import { RepositorySetup } from '../components/RepositorySetup'
+import { ServerStatus } from '../components/ServerStatus'
 import { SettingsSheet } from '../components/SettingsSheet'
 import { Sidebar } from '../components/Sidebar'
 import { subscribe } from '../lib/realtime'
 import { errorMessage } from '../lib/errors'
+import { useDesktopBadge } from '../lib/desktopStatus'
+import { useFloatingInspector, useFloatingSidebar } from '../lib/layout'
 import { MAILBOX_LABELS } from '../lib/lifecycle'
+import { overlayOpen } from '../lib/overlay'
 import { desktopNotificationsEnabled } from '../lib/preferences'
 import { useToasts } from '../lib/toastContext'
 import { handleReviewNotification, handleUiEvent, type ReviewNotificationPayload } from '../lib/uiEvents'
@@ -90,8 +95,14 @@ function useLiveUpdates() {
 function useShortcuts() {
   const workspace = useWorkspace()
 
+  const floatingSidebar = useFloatingSidebar()
+  const floatingInspector = useFloatingInspector()
+
   const onKeyDown = useEffectEvent((event: KeyboardEvent) => {
-    const { paletteOpen, setPaletteOpen, settingsTab, toggleSidebar, openSettings, moveSelection, toggleInspector, selected, actions, openNew } = workspace
+    const {
+      paletteOpen, setPaletteOpen, settingsTab, sidebarOpen, toggleSidebar, inspectorOpen,
+      openSettings, moveSelection, toggleInspector, selected, actions, openNew,
+    } = workspace
     const mod = event.metaKey || event.ctrlKey
     const key = event.key.toLowerCase()
 
@@ -109,6 +120,19 @@ function useShortcuts() {
       event.preventDefault()
       openSettings()
       return
+    }
+
+    if (event.key === 'Escape' && !paletteOpen && !settingsTab && !overlayOpen()) {
+      if (sidebarOpen && floatingSidebar) {
+        event.preventDefault()
+        toggleSidebar()
+        return
+      }
+      if (inspectorOpen && floatingInspector) {
+        event.preventDefault()
+        toggleInspector()
+        return
+      }
     }
 
     if (paletteOpen || settingsTab || mod || event.altKey || document.querySelector('.menu, .alert')) return
@@ -157,12 +181,13 @@ function useShortcuts() {
 }
 
 function DetailPane() {
-  const { route, selected, boardLoading, boardError, mailbox, sections } = useWorkspace()
+  const { route, selected, boardLoading, boardError, mailbox, sections, needsRepository } = useWorkspace()
 
   if (route.kind === 'new') return <NewReview />
   if (selected) return <PullRequestDetail item={selected} />
   if (boardError) return <DetailEmpty icon="warn" title="Couldn’t load pull requests" body={errorMessage(boardError)} />
   if (boardLoading) return <DetailEmpty icon="refresh" title="Loading" body="Fetching pull requests from Ordem…" />
+  if (needsRepository) return <RepositorySetup />
   if (route.kind === 'mailbox' && route.id !== null) return <DetailEmpty icon="search" title="Pull request not found" body="It may have been merged, closed or archived." />
   if (route.kind === 'task') return <DetailEmpty icon="refresh" title="Loading" body="Opening review…" />
   if (sections.length === 0) return <DetailEmpty icon="checkCircle" title={`${MAILBOX_LABELS[mailbox]} is empty`} body="Nothing to look at here right now." />
@@ -170,21 +195,41 @@ function DetailPane() {
 }
 
 export function Workspace() {
-  const { sidebarOpen, inspectorOpen, route, selected, paletteOpen, settingsTab } = useWorkspace()
+  const {
+    sidebarOpen, inspectorOpen, route, selected, paletteOpen, settingsTab,
+    toggleSidebar, toggleInspector, needsRepository, counts,
+  } = useWorkspace()
   const showInspector = inspectorOpen && route.kind !== 'new'
+  const floatingSidebar = useFloatingSidebar()
+  const floatingInspector = useFloatingInspector()
+  const sidebarOverlay = sidebarOpen && floatingSidebar
+  const inspectorOverlay = showInspector && floatingInspector
 
   useShortcuts()
   useLiveUpdates()
+  useDesktopBadge(counts.inbox)
 
   const classes = ['window']
   if (!sidebarOpen) classes.push('no-sidebar')
   if (showInspector) classes.push('with-inspector')
-  if (route.kind !== 'mailbox' || route.id !== null) classes.push('has-selection')
+  // In the single-pane layout this shows the detail pane, which holds repository setup.
+  if (route.kind !== 'mailbox' || route.id !== null || needsRepository) classes.push('has-selection')
 
   return (
     <>
       <div className="desktop">
         <div className={classes.join(' ')}>
+          {sidebarOverlay || inspectorOverlay ? (
+            <button
+              type="button"
+              className="pane-scrim"
+              aria-label={sidebarOverlay ? 'Close sidebar' : 'Close inspector'}
+              onClick={() => {
+                if (sidebarOverlay) toggleSidebar()
+                else toggleInspector()
+              }}
+            />
+          ) : null}
           <Sidebar />
           <PullRequestList />
           <DetailPane />
@@ -193,6 +238,7 @@ export function Workspace() {
       </div>
       {paletteOpen ? <CommandPalette /> : null}
       {settingsTab ? <SettingsSheet tab={settingsTab} /> : null}
+      <ServerStatus />
     </>
   )
 }

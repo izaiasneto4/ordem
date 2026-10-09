@@ -9,7 +9,9 @@ Ordem is a Bun + Elysia API with a React frontend.
 - `frontend/` — React + Vite app (dark, macOS-style design; styles in `frontend/src/styles/ordem.css`). Its production build in `public/frontend` is committed: rebuild with `npm --prefix frontend run build`.
 - `public/` — static assets and error pages served by the API.
 - `storage/` — SQLite databases.
-- `bin/` — developer helpers (`setup`, `dev`, `ordem`).
+- `desktop/` — Electron shell (`src/`: server supervisor, `ordem://` protocol, preload bridge, updater), electron-builder config as code, packaging scripts. The bridge contract the web app and preload share is `shared/desktop-bridge.ts`. Spec and plan: `docs/desktop-port-spec.md`, `docs/desktop-port-plan.md`.
+- `scripts/` — `build-server.ts` (compiles the backend into the desktop sidecar), `smoke-server.ts`, `sync-version.ts`.
+- `bin/` — developer helpers (`setup`, `dev`, `dev-desktop`, `ordem`).
 
 ## Build, Test, and Development Commands
 - `bin/setup` — install dependencies and prepare the database.
@@ -18,6 +20,9 @@ Ordem is a Bun + Elysia API with a React frontend.
 - `bun test backend/test/models/pull-request.test.ts` — run a single test file.
 - `bun run --cwd backend typecheck` — strict TypeScript check.
 - `npm --prefix frontend test` / `npm --prefix frontend run build` — frontend tests and build.
+- `bin/dev-desktop` — run the desktop app from source (unsets `ELECTRON_RUN_AS_NODE`, which breaks Electron when inherited).
+- `bun test ./desktop/test` / `npm --prefix desktop run typecheck` — desktop shell tests and typecheck; `bun test ./scripts` for the build scripts.
+- `bun run dist:mac` (and `dist:linux`, `dist:win`) — build installers into `desktop/release/`; `bun run desktop:smoke` launches the packaged app with `--smoke`.
 
 ## Coding Style & Naming Conventions
 - TypeScript is strict: no `any`, no type assertions (`as`, including `as const`), no non-null `!`. Narrow `unknown` with type guards or TypeBox. For literal constants use `literals(...)` (`backend/src/lib/literals.ts`) or `Object.freeze({...})`.
@@ -35,6 +40,12 @@ Ordem is a Bun + Elysia API with a React frontend.
 - Commit subjects are short, imperative, and capitalized (e.g., “Add worktree service tests”).
 - PRs should include: purpose, test commands run, and linked issues.
 - Add screenshots or short clips for UI changes.
+
+## Pull Request Workflow (Greptile)
+- Greptile reviews PRs. Its `Greptile Review` check and summary comment (`Confidence Score: N/5`) are the review signal.
+- Babysit each PR right after opening it: read Greptile's inline comments, fix valid findings, push, repeat. Iterate on Greptile's feedback instead of waiting on human review.
+- At a confidence score of 5/5, merge without asking. Before merging, confirm `gh pr view --json mergeable` is not `CONFLICTING` and CI ran on the head SHA.
+- If Greptile posts no check or summary within ~5 min, tell the user. Silence is not a clean review; don't merge.
 
 ## Configuration Notes
 This app requires authenticated CLI tools: `gh` (GitHub CLI) and an AI review CLI (`claude`, `codex` or `opencode`). Ensure they are on your `PATH` before running reviews or syncs.

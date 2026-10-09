@@ -23,6 +23,18 @@ Important:
 
 If you want to expose a running Ordem instance publicly, add authentication, TLS, host protection, and a CSP first.
 
+## Download
+
+On macOS or Linux, install or upgrade with one command:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/izaiasneto4/ordem/main/install.sh | sh
+```
+
+It downloads the right build from the newest release, checks it against the release's `SHA256SUMS`, and installs it (`/Applications/Ordem.app` on macOS, `~/Applications/Ordem.AppImage` plus a launcher entry on Linux). The macOS build isn't signed with an Apple Developer ID; installing this way skips the "Apple could not verify" prompt a browser download gets. Run it again to upgrade on macOS; Linux installs update themselves.
+
+Desktop builds for macOS, Linux and Windows are also on the [Releases page](https://github.com/izaiasneto4/ordem/releases): a `.dmg` for macOS, an `.AppImage` or `.deb` for Linux, and an installer for Windows. Each release lists which file to pick and how to open it. You still need `git`, `gh` and one of the review CLIs below installed.
+
 ## Supported environment
 
 Tested assumptions in the repository:
@@ -39,8 +51,7 @@ Tested assumptions in the repository:
 Platform notes:
 
 - The core app runs anywhere Bun and the CLIs above are available.
-- The folder picker UI uses `osascript`, so the interactive folder-picking flow is currently macOS-specific.
-- On non-macOS systems, configure the repositories folder directly in settings or through persisted app state instead of relying on the picker dialog.
+- In the web app, the folder picker uses `osascript`, so it is macOS-specific; elsewhere, type the repositories folder in Settings. The desktop app opens a native folder dialog on every platform.
 
 ## Quick start
 
@@ -62,6 +73,19 @@ bin/dev
 
 5. Ensure `gh` is authenticated and at least one supported review CLI is available on your `PATH`.
 
+## Desktop app
+
+Ordem also ships as a macOS, Linux and Windows app: the same web app in an Electron window, with the Bun server compiled into a single binary that the app starts, watches and stops for you. Data lives in `~/.ordem/userdata` (development runs use `~/.ordem/dev`). Design and rationale: [docs/desktop-port-spec.md](docs/desktop-port-spec.md).
+
+```bash
+npm --prefix desktop install   # once; needs Node 22.12 or newer
+bin/dev-desktop                # Vite + Electron, with the server from source
+bun run dist:mac               # or dist:mac:x64, dist:linux, dist:linux:arm64, dist:win
+bun run desktop:smoke          # launch the packaged app and check it reaches its server
+```
+
+Installers land in `desktop/release/`. Without Apple signing secrets, macOS builds are ad hoc signed: they run (after `xattr -d com.apple.quarantine` on a downloaded copy) but cannot update themselves. Pushing a `v*` tag runs `.github/workflows/release-desktop.yml`, which builds every platform on its own hardware and publishes one GitHub Release, with the install notes from `desktop/release-notes.md`. Tags with a suffix (`v1.0.0-beta.1`) become pre-releases. On macOS and Linux, *Install Command Line Tool…* in the app menu installs an `ordem` command that talks to the running app.
+
 ## Configuration
 
 Runtime configuration is intentionally small. See [.env.example](.env.example) for the public template.
@@ -74,6 +98,14 @@ Common variables:
 - `ORDEM_ALLOWED_HOSTS`: hosts allowed to reach the app. Default: localhost, `.localhost`, `.test` and IPs in development; any host in production
 - `ORDEM_LOG_LEVEL`: `debug`, `info`, `warn` or `error`
 - `ORDEM_DISABLE_JOB_WORKER=1`: queue background jobs without running them
+- `ORDEM_HOST`: interface the API listens on. Default: `0.0.0.0`
+- `ORDEM_HOME`: keeps state outside the repository. The database moves to `$ORDEM_HOME/dev/ordem.sqlite3` (`$ORDEM_HOME/userdata/` when `NODE_ENV=production`). `DATABASE_PATH` still wins when set
+- `ORDEM_STATE_DIR`: overrides the `dev`/`userdata` folder under `ORDEM_HOME`
+- `ORDEM_PUBLIC_DIR`: static files and the frontend build. Default: `public/`
+- `ORDEM_MIGRATIONS_DIR`: SQL migrations. Default: `backend/drizzle`
+- `ORDEM_DESKTOP_TOKEN`: when set, `/api/*` requires `Authorization: Bearer <token>` and `/ws` requires `?token=<token>`. `/up` and static files stay open. The desktop app sets a new one per launch
+- `ORDEM_API_TOKEN`: token the `ordem` CLI sends as a bearer credential
+- `ORDEM_MODE`: `server` (default) or `desktop`. Desktop mode skips changing into the app root, since it runs from a read-only bundle
 - `ANTHROPIC_MODEL` or `CLAUDE_MODEL`
 
 When upgrading an existing installation, use `bin/ordem` for CLI commands. The previous `FORGE_*` environment variables remain supported as fallbacks; `ORDEM_*` values take precedence. Keep your existing SQLite file at `DATABASE_PATH`. For Docker, mount your existing storage volume at `/app/storage`; the Docker example retains the existing volume identifier by default, while new installations may use `ordem_storage`. Existing review worktree directories and browser preferences also remain supported.
