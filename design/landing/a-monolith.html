@@ -54,7 +54,18 @@ nav.top .right { margin-left: auto; display: flex; gap: 6px; align-items: center
 .cmd { display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 8px 0 16px; border-radius: 10px; border: 1px dashed var(--hair2); font: 14px var(--mono); color: var(--t1); transition: border-color .2s, background .2s; }
 .cmd:hover { border-color: rgba(255,255,255,.28); background: rgba(255,255,255,.02); }
 .cmd .p { color: var(--t3); }
-.cmd .cp { font: 11.5px var(--mono); color: var(--t2); border: 1px solid var(--hair2); border-radius: 6px; padding: 4px 8px; }
+.cmd .cp { font: 11.5px var(--mono); color: var(--t2); border: 1px solid var(--hair2); border-radius: 6px; padding: 4px 8px; margin-left: auto; }
+.cmd code { font: inherit; white-space: nowrap; }
+.cmd.wide { display: flex; width: 100%; max-width: 520px; border-style: solid; background: rgba(255,255,255,.025); }
+.btn-line { box-shadow: inset 0 0 0 1px var(--hair2); color: var(--t1); }
+.btn-line:hover { background: rgba(255,255,255,.04); }
+.oslabel { font: 12px var(--mono); color: var(--t3); margin: 34px 0 10px; }
+.facts { list-style: none; margin: 18px 0 30px; display: grid; gap: 8px; font: 13px var(--mono); color: var(--t3); max-width: 520px; }
+.facts li { display: flex; gap: 10px; }
+.facts li::before { content: '→'; color: var(--t2); }
+.facts b { color: var(--t2); font-weight: 400; }
+.cta .req { margin: 22px 0 0; font-size: 13.5px; color: var(--t3); }
+.req code { font: 12.5px var(--mono); color: var(--t2); }
 
 /* section index rail */
 .rail { position: fixed; left: 28px; top: 50%; transform: translateY(-50%); z-index: 40; display: grid; gap: 2px; font: 11px var(--mono); color: var(--t3); opacity: 0; transition: opacity .4s; }
@@ -308,11 +319,11 @@ footer a:hover { color: var(--t1); }
       <a href="#workflow"><span>02</span>Workflow</a>
       <a href="#keyboard"><span>03</span>Keyboard</a>
       <a href="#local"><span>04</span>Local</a>
-      <a href="#">Docs</a>
+      <a href="https://github.com/izaiasneto4/ordem#readme">Docs</a>
     </div>
     <div class="right">
-      <a class="btn btn-ghost" href="#">GitHub</a>
-      <a class="btn btn-accent" href="#get">Get Ordem</a>
+      <a class="btn btn-ghost" href="https://github.com/izaiasneto4/ordem">GitHub</a>
+      <a class="btn btn-accent" href="#get">Install</a>
     </div>
   </div>
 </nav>
@@ -332,11 +343,13 @@ footer a:hover { color: var(--t1); }
       <div class="def fade"><b>or·dem</b> <span>/ˈɔʁ.dẽj/</span> <em>noun, Portuguese</em> — order.</div>
       <h1 id="h1"><span class="w">Code</span> <span class="w">review,</span><br><span class="w dim">in</span> <span class="w dim">order</span><span class="w sq"></span></h1>
       <p class="lead fade" style="animation-delay:.7s">Your pull requests, sorted. <b>Claude, Codex or OpenCode</b> reviews each one on your machine, and nothing reaches GitHub until you say so.</p>
-      <div class="ctas fade" style="animation-delay:.85s">
-        <a class="btn btn-accent btn-lg" href="#get">Get Ordem for Mac <span class="kbd">.dmg</span></a>
-        <button class="cmd" id="copy"><span class="p">$</span>brew install ordem<span class="cp">copy</span></button>
+      <div class="oslabel fade" style="animation-delay:.85s">Install on macOS or Linux</div>
+      <button class="cmd wide fade" style="animation-delay:.85s" data-copy><span class="p">$</span><code>curl -fsSL https://ordem.sh/install.sh | sh</code><span class="cp">copy</span></button>
+      <div class="ctas fade" style="animation-delay:.95s;margin-top:12px">
+        <a class="btn btn-accent btn-lg" href="https://github.com/izaiasneto4/ordem/releases">All downloads</a>
+        <a class="btn btn-line btn-lg" href="https://github.com/izaiasneto4/ordem">View source</a>
       </div>
-      <div class="meta fade" style="animation-delay:1s"><span>MIT</span><span>runs locally</span><span>no account</span></div>
+      <div class="meta fade" style="animation-delay:1.05s"><span>macOS · Linux · Windows</span><span>MIT</span><span>1.0 beta</span></div>
     </div>
     <div class="sorter fade" id="sorter" style="animation-delay:.2s" aria-hidden="true">
       <div class="foot"><svg width="13" height="13" style="color:var(--t2)"><use href="#i-check"/></svg>Settled <b id="settled">48</b><span class="r">sorted by what needs you</span></div>
@@ -488,7 +501,7 @@ footer a:hover { color: var(--t1); }
       <div class="node"><span class="dot"></span><span class="num">4.4</span><b>you</b><p>Keep, drop or edit each finding</p></div>
       <div class="node"><span class="dot"></span><span class="num">4.5</span><b>gh pr review</b><p>Post one review, as you</p></div>
     </div>
-    <p class="note in-view">no account · no telemetry · one sqlite file</p>
+    <p class="note in-view">no ordem account · your data stays in ~/.ordem</p>
   </div>
 </section>
 
@@ -497,11 +510,18 @@ footer a:hover { color: var(--t1); }
     <div class="in-view">
       <div class="eyebrow" style="max-width:420px"><b>05</b>Get it</div>
       <h3 style="margin-top:26px">Inbox zero,<br><span>for code review.</span></h3>
-      <p>MIT licensed. Runs on your Mac with the agent you already have.</p>
+      <p>Free and MIT licensed, for macOS, Linux and Windows. One command installs it:</p>
+      <button class="cmd wide" data-copy><span class="p">$</span><code>curl -fsSL https://ordem.sh/install.sh | sh</code><span class="cp">copy</span></button>
+      <ul class="facts">
+        <li><span>Fetches the newest release and checks it against <b>SHA256SUMS</b></span></li>
+        <li><span><b>macOS</b> installs to /Applications with no Gatekeeper prompt. Run it again to upgrade</span></li>
+        <li><span><b>Linux</b> gets the AppImage and a launcher entry, and updates itself</span></li>
+      </ul>
       <div class="ctas" style="margin-top:0">
-        <a class="btn btn-accent btn-lg" href="#">Get Ordem for Mac <span class="kbd">.dmg</span></a>
-        <button class="cmd" id="copy2"><span class="p">$</span>brew install ordem<span class="cp">copy</span></button>
+        <a class="btn btn-accent btn-lg" href="https://github.com/izaiasneto4/ordem/releases">All downloads</a>
+        <a class="btn btn-line btn-lg" href="https://github.com/izaiasneto4/ordem">Star on GitHub</a>
       </div>
+      <p class="req">Needs <code>git</code>, <code>gh</code> and one of <code>claude</code>, <code>codex</code> or <code>opencode</code>.</p>
     </div>
     <div class="bigmark in-view" id="bigmark">
       <svg viewBox="-8 -8 119 119">
@@ -517,7 +537,7 @@ footer a:hover { color: var(--t1); }
   <div class="wrap">
     <a class="brand" href="#"><svg><use href="#mark"/></svg>ordem</a>
     <span>code review, in order.</span>
-    <div class="fl"><a href="#">docs</a><a href="#">changelog</a><a href="#">github</a><a href="#">ordem.sh</a></div>
+    <div class="fl"><a href="https://github.com/izaiasneto4/ordem#readme">docs</a><a href="https://github.com/izaiasneto4/ordem/releases">releases</a><a href="https://github.com/izaiasneto4/ordem">github</a><a href="https://github.com/izaiasneto4/ordem/blob/main/LICENSE">license</a></div>
   </div>
 </footer>
 
@@ -639,10 +659,10 @@ document.querySelectorAll('.tile').forEach(t => t.addEventListener('pointermove'
   t.style.setProperty('--mx', e.clientX - r.left + 'px'); t.style.setProperty('--my', e.clientY - r.top + 'px')
 }))
 
-for (const id of ['copy', 'copy2']) document.getElementById(id).addEventListener('click', e => {
-  navigator.clipboard?.writeText('brew install ordem')
-  const c = e.currentTarget.querySelector('.cp'); c.textContent = 'copied'; setTimeout(() => c.textContent = 'copy', 1400)
-})
+document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => {
+  navigator.clipboard?.writeText(b.querySelector('code').textContent)
+  const c = b.querySelector('.cp'); c.textContent = 'copied'; setTimeout(() => c.textContent = 'copy', 1400)
+}))
 
 // pins <-> legend
 const pins = [...document.querySelectorAll('.pin')]

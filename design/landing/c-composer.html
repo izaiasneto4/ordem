@@ -317,8 +317,8 @@ footer a:hover { color: var(--t1); }
 
 <div class="end" id="get">
   <h2>Code review, in order.</h2>
-  <div class="inst"><span>$</span> brew install ordem <button id="copy">Copy</button></div>
-  <p>Free and open source · macOS · or <a href="#" style="color:var(--t2);text-decoration:underline">download the .dmg</a></p>
+  <div class="inst"><span>$</span> curl -fsSL https://ordem.sh/install.sh | sh <button id="copy">Copy</button></div>
+  <p>MIT licensed · macOS and Linux · Windows and other builds on the <a href="https://github.com/izaiasneto4/ordem/releases" style="color:var(--t2);text-decoration:underline">releases page</a></p>
 </div>
 
 <footer>
@@ -376,7 +376,7 @@ document.getElementById('seg').addEventListener('click', e => {
 submit.addEventListener('click', async () => {
   submit.textContent = 'Posted ✓'; await sleep(1400); submit.innerHTML = 'Submit to GitHub <kbd>⌘↵</kbd>'
 })
-document.getElementById('copy').addEventListener('click', e => { navigator.clipboard?.writeText('brew install ordem'); e.target.textContent = 'Copied'; setTimeout(() => e.target.textContent = 'Copy', 1400) })
+document.getElementById('copy').addEventListener('click', e => { navigator.clipboard?.writeText('curl -fsSL https://ordem.sh/install.sh | sh'); e.target.textContent = 'Copied'; setTimeout(() => e.target.textContent = 'Copy', 1400) })
 
 async function typeInto(text, id) {
   input.value = ''
